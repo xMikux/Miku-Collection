@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-bullseye-slim-arm64v8 AS build
+LABEL org.opencontainers.image.source https://github.com/xMikux/Miku-Collection
 WORKDIR /source
 
 COPY src/NadekoBot/*.csproj src/NadekoBot/
