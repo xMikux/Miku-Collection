@@ -17,7 +17,7 @@ jobs:
       working-directory: ./NadekoBotImage
     steps:
       - uses: actions/checkout@v2
-      - uses: docker/setup-qemu-action@v1
+      #- uses: docker/setup-qemu-action@v1
       - run: |
           mv Dockerfile DockerfileCopy
           mv docker-entrypoint.sh docker-entrypointCopy.sh
