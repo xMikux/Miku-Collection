@@ -12,16 +12,19 @@ jobs:
   push:
     name: "xmikux:nadekobotimage"
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./NadekoBotImage
     steps:
       - uses: actions/checkout@v2
       - run: |
-          mv NadekoBotImage/Dockerfile ..
-          mv NadekoBotImage/docker-entrypoint ..
+          mv Dockerfile Dockerfile_
+          mv docker-entrypoint.sh docker-entrypoint_.sh
           curl -Lo nadeko.tar.gz https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.gz
           tar -xzvf nadeko.tar.gz
-          mv nadekobot-v3/* NadekoBotImage/
-          mv Dockerfile NadekoBotImage/
-          mv docker-entrypoint NadekoBotImage/
+          mv nadekobot-v3/* .
+          mv Dockerfile Dockerfile
+          mv docker-entrypoint.sh docker-entrypoint.sh
+        working-directory: ${{env.working-directory}}
 
       #- uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
