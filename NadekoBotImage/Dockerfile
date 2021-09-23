@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-bullseye-slim-arm64v8 AS build
-LABEL org.opencontainers.image.source https://github.com/xMikux/Miku-Collection
 WORKDIR /source
 
 COPY src/NadekoBot/*.csproj src/NadekoBot/
@@ -35,6 +34,8 @@ COPY docker-entrypoint.sh /usr/local/sbin
 
 ENV shard_id=0
 ENV total_shards=1
+
+LABEL org.opencontainers.image.source https://github.com/xMikux/Miku-Collection
 
 VOLUME [ "app/data" ]
 ENTRYPOINT [ "/usr/local/sbin/docker-entrypoint.sh" ]
