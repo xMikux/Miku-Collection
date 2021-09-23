@@ -26,7 +26,11 @@ jobs:
           mv nadekobot-v3/* .
           mv DockerfileCopy Dockerfile
           mv docker-entrypointCopy.sh docker-entrypoint.sh
+          rm nadeko.tar.gz
+          rm -r nadekobot-v3
           ls -a
+          cat docker-entrypoint.sh
+          cat Dockerfile
         working-directory: ${{env.working-directory}}
 
       #- uses: docker/setup-qemu-action@v1
