@@ -23,7 +23,7 @@ jobs:
           mv docker-entrypoint.sh docker-entrypointCopy.sh
           curl -Lo nadeko.tar.gz https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.gz
           tar -xzvf nadeko.tar.gz
-          mv nadekobot-v3/* ..
+          mv nadekobot-v3/* .
           mv DockerfileCopy Dockerfile
           mv docker-entrypointCopy.sh docker-entrypoint.sh
         working-directory: ${{env.working-directory}}
