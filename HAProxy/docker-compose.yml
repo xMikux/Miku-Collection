@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  haproxy:
+    image: haproxy:2.0.25
+    container_name: haproxy
+    restart: always
+    ports:
+      - "Port:Port"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
