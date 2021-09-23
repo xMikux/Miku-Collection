@@ -44,4 +44,4 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/nadekobotimage:nadeko
+            ghcr.io/xmikux/miku-collection:nadekobotimage
