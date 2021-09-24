@@ -26,6 +26,7 @@ jobs:
           mv nadekobot-v3/* .
           mv DockerfileCopy Dockerfile
           mv docker-entrypointCopy.sh docker-entrypoint.sh
+          rm docker-compose.yml
           rm nadeko.tar.gz
           rm -r nadekobot-v3
         working-directory: ${{env.working-directory}}

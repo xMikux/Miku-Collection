@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  nadeko:
+    image: ghcr.io/xmikux/miku-collection:nadekobotimage
+    depends_on:
+      - redis
+    environment:
+      TZ: Asia/Taipei
+      NadekoBot_RedisOptions: redis,name=nadeko
+      #NadekoBot_ShardRunCommand: dotnet
+      #NadekoBot_ShardRunArguments: /app/NadekoBot.dll {0} {1}
+    volumes:
+      - /opt/NadekoBot/CoCoNutBot/conf/creds.yml:/app/creds.yml
+      - /opt/NadekoBot/CoCoNutBot/data:/app/data
+
+  redis:
+    image: arm64v8/redis:4-buster
+    sysctls:
+      - net.core.somaxconn=511
+    command: redis-server --maxmemory 32M --maxmemory-policy volatile-lru
+    volumes:
+      - /opt/NadekoBot/CoCoNutBot/redis-data:/data
