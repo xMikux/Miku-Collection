@@ -5,5 +5,5 @@ NadekoBotIamge for arm64 <br>
 > [NadekobotDocs](https://nadekobot.readthedocs.io/en/v3/guides/docker-guide/)
 
 Image
-* [nadekobotimage](https://github.com/xmikux/yolks/tree/master/java/8)
+* [nadekobotimage](https://github.com/xMikux/Miku-Collection/tree/main/NadekoBot/ARMImage)
     * `ghcr.io/xmikux/miku-collection:nadekobotimage`
