@@ -32,6 +32,8 @@ RUN set -xe; \
 COPY --from=build /app ./
 COPY docker-entrypoint.sh /usr/local/sbin
 
+RUN chmod +x /usr/local/sbin/docker-entrypoint.sh
+
 ENV shard_id=0
 ENV total_shards=1
 
