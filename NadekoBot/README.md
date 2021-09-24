@@ -1,4 +1,4 @@
-# NadekoBotImage
+# NadekoBot
 NadekoBotIamge for arm64 <br>
 
 > [NadekoBotV3](https://gitlab.com/Kwoth/nadekobot/-/tree/v3) | [NadekoBotV3Docker](https://gitlab.com/veovis/nadekobot/-/tree/v3-docker) <br>

@@ -7,14 +7,13 @@ on:
     branches:
       - main
     paths:
-      - NadekoBotImage/Dockerfile
-      - NadekoBotImage/docker-entrypoint.sh
+      - NadekoBot/ARMImage/**
 jobs:
   push:
     name: "xmikux:nadekobotimage"
     runs-on: self-hosted
     env:
-      working-directory: ./NadekoBotImage
+      working-directory: ./NadekoBot/ARMImage
     steps:
       - uses: actions/checkout@v2
       #- uses: docker/setup-qemu-action@v1
@@ -26,7 +25,6 @@ jobs:
           mv nadekobot-v3/* .
           mv DockerfileCopy Dockerfile
           mv docker-entrypointCopy.sh docker-entrypoint.sh
-          rm docker-compose.yml
           rm nadeko.tar.gz
           rm -r nadekobot-v3
         working-directory: ${{env.working-directory}}
@@ -43,7 +41,7 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           context: ./NadekoBotImage
-          file: ./NadekoBotImage/Dockerfile
+          file: ${{env.working-directory}}/Dockerfile
           platforms: linux/arm64
           push: true
           tags: |
