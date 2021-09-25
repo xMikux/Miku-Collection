@@ -25,7 +25,7 @@ RUN set -xe; \
     useradd -m nadeko; \
     apt-get update; \
     apt-get install -y libopus0 libsodium23 libsqlite3-0 youtube-dl curl sudo --no-install-recommends; \
-    rm -rf /var/lib/apt/lists/* \
+    rm -rf /var/lib/apt/lists/*; \
     echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl; \
     chmod + /usr/local/bin/youtube-dl
