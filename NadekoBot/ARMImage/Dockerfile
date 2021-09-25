@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-bullseye-slim-arm64v8 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm64v8 AS build
 WORKDIR /source
 
 COPY src/NadekoBot/*.csproj src/NadekoBot/
@@ -18,13 +18,14 @@ RUN set -xe; \
     chmod +x /app/NadekoBot
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:5.0-bullseye-slim-arm64v8
+FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim-arm64v8
 WORKDIR /app
 
 RUN set -xe; \
     useradd -m nadeko; \
     apt-get update; \
-    apt-get install -y libopus0 libsodium23 libsqlite3-0 youtube-dl curl sudo; \
+    apt-get install -y libopus0 libsodium23 libsqlite3-0 youtube-dl curl sudo --no-install-recommends; \
+    rm -rf /var/lib/apt/lists/* \
     echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl; \
     chmod + /usr/local/bin/youtube-dl
