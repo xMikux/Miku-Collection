@@ -19,7 +19,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0
+          dotnet-version: '5.0.x'
       - run: dotnet publish -c Release -r linux-arm -o /armoutput src/NadekoBot/NadekoBot.csproj
         working-directory: ${{env.working-directory}}
       - name: Upload dotnet test results
