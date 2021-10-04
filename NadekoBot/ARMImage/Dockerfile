@@ -31,7 +31,7 @@ RUN set -xe; \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1; \
     pip3 install --upgrade youtube-dl; \
     apt-get purge -y python3-pip; \
-    apt-get autoremove --purge; \
+    apt-get autoremove -y --purge; \
     rm -rf /var/lib/apt/lists/*; \
     echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
     chmod +x /usr/local/bin/youtube-dl; \
