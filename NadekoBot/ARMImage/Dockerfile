@@ -21,19 +21,20 @@ RUN set -xe; \
 FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim-arm64v8
 WORKDIR /app
 
-RUN set -xe; \
-    useradd -m nadeko; \
-    apt-get update; \
-    apt-get install -y libopus0 libsodium23 libsqlite3-0 youtube-dl curl sudo --no-install-recommends; \
-    rm -rf /var/lib/apt/lists/*; \
-    echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
-    curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl; \
-    chmod + /usr/local/bin/youtube-dl
-
 COPY --from=build /app ./
 COPY docker-entrypoint.sh /usr/local/sbin
 
-RUN chmod +x /usr/local/sbin/docker-entrypoint.sh
+RUN set -xe; \
+    useradd -m nadeko; \
+    apt-get update; \
+    apt-get install -y libopus0 libsodium23 libsqlite3-0 curl ffmpeg python3 python3-pip sudo --no-install-recommends; \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1; \
+    pip3 install --upgrade youtube-dl; \
+    apt-get purge -y python3-pip; \
+    rm -rf /var/lib/apt/lists/*; \
+    echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
+    chmod +x /usr/local/bin/youtube-dl; \
+    chmod +x /usr/local/sbin/docker-entrypoint.sh
 
 ENV shard_id=0
 ENV total_shards=1
