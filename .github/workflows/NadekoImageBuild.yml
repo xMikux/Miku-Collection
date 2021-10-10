@@ -11,12 +11,12 @@ on:
 jobs:
   push:
     name: "xmikux:nadekobotimage"
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       working-directory: ./NadekoBot/ARMImage
     steps:
       - uses: actions/checkout@v2
-      #- uses: docker/setup-qemu-action@v1
+      - uses: docker/setup-qemu-action@v1
       - run: |
           mv Dockerfile DockerfileCopy
           mv docker-entrypoint.sh docker-entrypointCopy.sh
