@@ -1,7 +1,7 @@
 # NadekoBot
 
 NadekoBotIamge for amd64/arm64 <br>
-Original Dockerfile on NadekoBotV3Docker, for normal x86_64 docker!
+Original Dockerfile on NadekoBotV3, for normal x86_64 docker!
 
 > [NadekoBotV3](https://gitlab.com/Kwoth/nadekobot/-/tree/v3) <br>
 > [NadekoBotDocs](https://nadekobot.readthedocs.io/en/v3/guides/docker-guide/)
