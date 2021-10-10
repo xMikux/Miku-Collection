@@ -9,8 +9,8 @@ on:
     paths:
       - NadekoBot/Image/**
 jobs:
-  ValidatorNadeko:
-    name: "ValidatorNadeko"
+  ValidatorNadekoBot:
+    name: "ValidatorNadekoBot"
     runs-on: ubuntu-latest
     env:
       working-directory: ./NadekoBot/Image
@@ -23,23 +23,15 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - name: Get Nadeko Source Code
+      - name: Download NadekoBot Source Code
         run: |
-          curl -Lo nadeko.tar.gz https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.gz
-          tar -xzf nadeko.tar.gz
+          curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.bz2
+          tar -jxvf nadekobot.tar.bz2
           mv nadekobot-v3/* .
-          rm nadeko.tar.gz
+          rm nadekobot.tar.bz2
           rm -r nadekobot-v3
           mkdir output
         working-directory: ${{env.working-directory}}
-
-      - name: Nadeko Cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/NuGet.Config') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
 
       - name: Build Nadeko
         run: |
@@ -53,7 +45,7 @@ jobs:
         working-directory: ${{env.working-directory}}
 
   ImageBuild:
-    needs: ValidatorNadeko
+    needs: ValidatorNadekoBot
     name: "Build Nadekobot Image"
     runs-on: ubuntu-latest
     env:
@@ -65,16 +57,16 @@ jobs:
       - name: Setup multiarch
         uses: docker/setup-qemu-action@v1
 
-      - name: Get Nadeko Source Code
+      - name: Download NadekoBot Source Code
         run: |
           mv Dockerfile DockerfileCopy
           mv docker-entrypoint.sh docker-entrypointCopy.sh
-          curl -Lo nadeko.tar.gz https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.gz
-          tar -xzf nadeko.tar.gz
-          mv nadekobot-v3/* .
+          curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.bz2
+          tar -jxvf nadekobot.tar.bz2
+          mv nadekobot/* .
           mv DockerfileCopy Dockerfile
           mv docker-entrypointCopy.sh docker-entrypoint.sh
-          rm nadeko.tar.gz
+          rm nadekobot.tar.bz2
           rm -r nadekobot-v3
         working-directory: ${{env.working-directory}}
 
