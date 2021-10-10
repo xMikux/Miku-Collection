@@ -11,7 +11,7 @@ on:
 jobs:
   ValidatorNadeko:
     name: "ValidatorNadeko"
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     env:
       working-directory: ./NadekoBot/Image
     steps:
