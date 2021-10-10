@@ -33,13 +33,13 @@ jobs:
           mkdir output
         working-directory: ${{env.working-directory}}
 
-      # - uses: actions/cache@v2
-      #   with:
-      #     path: ~/.nuget/packages
-      #     # Look to see if there is a cache hit for the corresponding requirements file
-      #     key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-nuget
+      - uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/NuGet.Config') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
 
       - name: Build Nadeko
         run: |
@@ -50,15 +50,6 @@ jobs:
         run: |
           cd src/NadekoBot.Tests
           dotnet test
-        working-directory: ${{env.working-directory}}
-
-      - name: Check current folder
-        run: |
-          ls -alh
-          ls ~/ -alh
-          cd ..
-          ls -alh
-          ls ~/.nuget -alh
         working-directory: ${{env.working-directory}}
 
   ImageBuild:
