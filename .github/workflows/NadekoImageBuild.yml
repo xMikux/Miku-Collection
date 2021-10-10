@@ -2,14 +2,65 @@ name: Build NadekoBotImage
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 1"
+    - cron: "0 0 * * *"
   push:
     branches:
       - main
     paths:
       - NadekoBot/Image/**
 jobs:
-  push:
+  ValidatorNadeko:
+    name: "ValidatorNadeko"
+    run-on: ubuntu-latest
+    env:
+      working-directory: ./NadekoBot/Image
+    steps:
+      - name: Checking Repostiory
+        uses: actions/checkout@v2
+
+      - name: Setup Dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: Get Nadeko Source Code
+        run: |
+          curl -Lo nadeko.tar.gz https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.gz
+          tar -xzf nadeko.tar.gz
+          mv nadekobot-v3/* .
+          rm nadeko.tar.gz
+          rm -r nadekobot-v3
+          mkdir output
+        working-directory: ${{env.working-directory}}
+
+      - name: Build Nadeko
+        run: |
+          dotnet publish -c Release -r linux-x64 -o ./output src/NadekoBot/NadekoBot.csproj
+        working-directory: ${{env.working-directory}}
+
+      - name: Test Nadeko
+        run: |
+          cd src/
+          dotnet test
+        working-directory: ${{env.working-directory}}
+
+      - name: Check current folder
+        run: |
+          ls -alh
+          ls ~/ -alh
+          cd ..
+          ls -alh
+
+      # - name: Dotnet Cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ~/.nuget/packages
+      #     key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-nuget
+
+  ImageBuild:
+    needs: ValidatorNadeko
     name: "Build Nadekobot Image"
     runs-on: ubuntu-latest
     env:
