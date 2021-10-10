@@ -40,7 +40,7 @@ jobs:
 
       - name: Test Nadeko
         run: |
-          cd src/
+          cd src/NadekoBot.Tests
           dotnet test
         working-directory: ${{env.working-directory}}
 
@@ -50,14 +50,6 @@ jobs:
           ls ~/ -alh
           cd ..
           ls -alh
-
-      # - name: Dotnet Cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/.nuget/packages
-      #     key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-nuget
 
   ImageBuild:
     needs: ValidatorNadeko
