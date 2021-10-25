@@ -4,3 +4,6 @@ services:
     image:
     ports:
       - "Port:Port"
+    cap_add:
+    - CAP_NET_ADMIN
+    #privileged: true

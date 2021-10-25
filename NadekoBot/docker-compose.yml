@@ -10,8 +10,8 @@ services:
       #NadekoBot_ShardRunCommand: dotnet
       #NadekoBot_ShardRunArguments: /app/NadekoBot.dll {0} {1}
     volumes:
-      - /opt/NadekoBot/CoCoNutBot/conf/creds.yml:/app/creds.yml
-      - /opt/NadekoBot/CoCoNutBot/data:/app/data
+      - /opt/NadekoBot/Bot1/conf/creds.yml:/app/creds.yml
+      - /opt/NadekoBot/Bot1/data:/app/data
 
   redis:
     image: arm64v8/redis:4-buster
@@ -19,4 +19,4 @@ services:
       - net.core.somaxconn=511
     command: redis-server --maxmemory 32M --maxmemory-policy volatile-lru
     volumes:
-      - /opt/NadekoBot/CoCoNutBot/redis-data:/data
+      - /opt/NadekoBot/Bot1/redis-data:/data
