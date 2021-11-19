@@ -4,4 +4,8 @@ For some random stuff by miku collect.
 
 ## Status
 
-NadekoBot AutoBuild: [![Build NadekoBotImage](https://github.com/xMikux/Miku-Collection/actions/workflows/NadekoImageBuild.yml/badge.svg?branch=main&event=schedule)](https://github.com/xMikux/Miku-Collection/actions/workflows/NadekoImageBuild.yml)
+NadekoBot AutoBuild: [![Docker oci-cli](https://img.shields.io/github/workflow/status/xMikux/Miku-Collection/Build%20NadekoBotImage?style=flat-square)](https://github.com/xMikux/Miku-Collection/tree/main/NadekoBot)
+
+DockerImage:
+
+* oci-cli [![Docker oci-cli](https://img.shields.io/github/workflow/status/xMikux/Miku-Collection/OracleCLI_Image?style=flat-square)](https://github.com/xMikux/Miku-Collection/tree/main/DockerImage)
