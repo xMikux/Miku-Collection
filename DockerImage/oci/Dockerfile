@@ -1,10 +1,10 @@
-FROM python:3.9-slim as Builder
+FROM --platform=$TARGETOS/$TARGETARCH python:3.9-slim as Builder
 
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-FROM python:3.9-alpine
+FROM --platform=$TARGETOS/$TARGETARCH python:3.9-alpine
 
 COPY --from=Builder /root/.local /root/.local
 
