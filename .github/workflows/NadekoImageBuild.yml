@@ -1,6 +1,15 @@
 name: Build NadekoBotImage
 on:
   workflow_dispatch:
+    inputs:
+      versions:
+        description: "Nadeko Versions"
+        required: false
+        default: "v3"
+      images-versions:
+        description: "Docker Image Versions"
+        required: false
+        default: "latest"
   schedule:
     - cron: "0 16 * * 1"
   push:
@@ -25,25 +34,25 @@ jobs:
 
       - name: Download NadekoBot Source Code
         run: |
-          curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.bz2
+          curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/${{ github.event.inputs.versions }}/nadekobot-${{ github.event.inputs.versions }}.tar.bz2
           sha256sum nadekobot.tar.bz2
           tar -jxvf nadekobot.tar.bz2
-          mv nadekobot-v3/* .
+          mv nadekobot-${{ github.event.inputs.versions }}/* .
           rm nadekobot.tar.bz2
-          rm -r nadekobot-v3
+          rm -r nadekobot-${{ github.event.inputs.versions }}
           mkdir output
-        working-directory: ${{env.working-directory}}
+        working-directory: ${{ env.working-directory }}
 
       - name: Build Nadeko
         run: |
           dotnet publish -c Release -r linux-x64 -o ./output src/NadekoBot/NadekoBot.csproj
-        working-directory: ${{env.working-directory}}
+        working-directory: ${{ env.working-directory }}
 
       - name: Test Nadeko
         run: |
           cd src/NadekoBot.Tests
           dotnet test
-        working-directory: ${{env.working-directory}}
+        working-directory: ${{ env.working-directory }}
 
   ImageBuild:
     needs: ValidatorNadekoBot
@@ -62,15 +71,15 @@ jobs:
         run: |
           mv Dockerfile DockerfileCopy
           mv docker-entrypoint.sh docker-entrypointCopy.sh
-          curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/v3/nadekobot-v3.tar.bz2
+          curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/${{ github.event.inputs.versions }}/nadekobot-${{ github.event.inputs.versions }}.tar.bz2
           sha256sum nadekobot.tar.bz2
           tar -jxvf nadekobot.tar.bz2
-          mv nadekobot-v3/* .
+          mv nadekobot-${{ github.event.inputs.versions }}/* .
           mv DockerfileCopy Dockerfile
           mv docker-entrypointCopy.sh docker-entrypoint.sh
           rm nadekobot.tar.bz2
-          rm -r nadekobot-v3
-        working-directory: ${{env.working-directory}}
+          rm -r nadekobot-${{ github.event.inputs.versions }}
+        working-directory: ${{ env.working-directory }}
 
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v1.6.0
@@ -97,12 +106,12 @@ jobs:
       - name: Build & Push NadekoBot Image
         uses: docker/build-push-action@v2
         with:
-          context: ${{env.working-directory}}
+          context: ${{ env.working-directory }}
           file: ${{env.working-directory}}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/nadeko:latest
+            ghcr.io/xmikux/nadeko:${{ github.event.inputs.images-versions }}
           # cache-from: type=local,src=/tmp/.buildx-cache
           # Note the mode=max here
           # More: https://github.com/moby/buildkit#--export-cache-options
