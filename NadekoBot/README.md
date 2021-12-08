@@ -11,4 +11,8 @@ Original Dockerfile on NadekoBotV3, for normal x86_64 docker!
 ## Image
 
 * [nadekobotimage](https://github.com/xMikux/Miku-Collection/tree/main/NadekoBot/ARMImage)
-  * `ghcr.io/xmikux/miku-collection:nadekobotimage`
+  * `ghcr.io/xmikux/nadeko:latest`
+  * `ghcr.io/xmikux/nadeko:3.0.7`
+  * `ghcr.io/xmikux/nadeko:3.0.8`
+  * `ghcr.io/xmikux/nadeko:3.0.9`
+  * `ghcr.io/xmikux/nadeko:3.0.10`
