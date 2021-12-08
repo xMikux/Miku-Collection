@@ -14,7 +14,7 @@ do
 done
 
 # fix folder permissions
-chown -R nadeko:nadeko "$data"
+chown -R nadeko:nadeko "/app"
 
 # drop to regular user and launch command
 exec sudo -u nadeko "$@"
