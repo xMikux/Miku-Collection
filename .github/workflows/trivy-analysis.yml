@@ -9,6 +9,9 @@ on:
   workflow_dispatch: {}
   push:
     branches: [ main ]
+    paths:
+      - NadekoBot/Image/**
+      - DockerImage/oci/*
   pull_request:
     branches: [ main ]
   schedule:
@@ -37,7 +40,7 @@ jobs:
         with:
           context: ${{ matrix.path }}
           file: ${{ matrix.path }}/Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: false
           tags: |
             ${{ matrix.name }}:${{ github.sha }}
