@@ -26,8 +26,8 @@ jobs:
        include:
          - name: "oci"
            path: ./DockerImage/oci
-         - name: "nadeko"
-           path: ./NadekoBot/Image
+        #  - name: "nadeko"
+        #    path: ./NadekoBot/Image
     env:
       working-directory: ${{ matrix.path }}
     steps:
