@@ -22,9 +22,9 @@ jobs:
       matrix:
        include:
          - name: "oci"
-           path: "DockerImage/oci/"
+           path: DockerImage/oci/
          - name: "nadeko"
-           path: "NadekoBot/image/"
+           path: NadekoBot/image/
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
