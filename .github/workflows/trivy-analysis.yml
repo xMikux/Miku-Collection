@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
        include:
-         - name: "OCI Docker Image"
+         - name: "oci"
            path: "DockerImage/oci/"
          - name: "nadeko"
            path: "NadekoBot/image/"
