@@ -75,6 +75,14 @@ jobs:
       - name: Setup multiarch
         uses: docker/setup-qemu-action@v1
 
+      - name: Setup Environment
+        env:
+          DEFAULT_NADEKO_VERSIONS: "v3"
+          DEFAULT_IMAGE_VERSIONS: "latest"
+        run: |
+          echo "NADEKO_VERSIONS=${{ github.event.inputs.versions || env.DEFAULT_NADEKO_VERSIONS }}" >> $GITHUB_ENV
+          echo "IMAGE_VERSIONS=${{ github.event.inputs.images-versions || env.DEFAULT_IMAGE_VERSIONS }}" >> $GITHUB_ENV
+
       - name: Download NadekoBot Source Code
         run: |
           mv Dockerfile DockerfileCopy
