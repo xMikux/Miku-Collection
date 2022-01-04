@@ -26,6 +26,10 @@ CFZoneID=
 CFAccountID=
 DNSName=
 
+## HetrixTools Agent ID
+
+HT_AgentID=
+
 # Upgrade OS APT Packages
 
 apt-get update
@@ -51,7 +55,7 @@ systemctl enable --now docker
 
 # Create SSL Cert
 
-## Issus cert
+## Using Docker Issus cert
 ### Need Test
 docker run --rm -it \
   -v "/root/out":/acme.sh \
@@ -60,10 +64,10 @@ docker run --rm -it \
   -e CF_Token="$CFToken" \
   -e CF_Account_ID="$CFAccountID" \
   -e CF_Zone_ID="$CFZoneID" \
-  neilpang/acme.sh \
   --issue --server letsencrypt --dns dns_cf -d "$DNSName" \
   --key-file /acme.sh/privkey.pem \
-  --fullchain-file /acme.sh/fullchain.pem
+  --fullchain-file /acme.sh/fullchain.pem \
+  neilpang/acme.sh
 
 ## Move cert
 mkdir /etc/letsencrypt
@@ -120,3 +124,11 @@ ufw allow 33333/tcp
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/1' /etc/ssh/sshd_config
 systemctl restart sshd
 
+# Install HetrixTools Agent
+
+wget https://raw.github.com/hetrixtools/agent/master/hetrixtools_install.sh && bash hetrixtools_install.sh $HT_AgentID 0 0 0 0 0 0
+
+# Reboot Server to Upgrade
+
+sleep 5s
+reboot now
