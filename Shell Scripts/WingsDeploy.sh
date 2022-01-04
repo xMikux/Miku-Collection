@@ -19,7 +19,7 @@ Panel_URL=
 Panel_Token=
 
 ## DNS ENV
-Ipv4_IP=$(curl -4 -s https://icanhazip.com/)
+IPV4_IP=$(curl -4 -s https://icanhazip.com/)
 DNSRecordID=
 CFToken=
 CFZoneID=
@@ -30,17 +30,27 @@ DNSName=
 
 HT_AgentID=
 
+## Discord Webhook
+
+CurrentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+Discord_Webhook=""
+Discord_Content=""
+
+## SSH Key
+
+SSH_KEY=""
+
 # Upgrade OS APT Packages
 
 apt-get update
 apt-get upgrade -y
 
-# Setup DNS
+# Update DNS
 
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/${CFZoneID}/dns_records/${DNSRecordID}" \
     -H "Authorization: Bearer ${CFToken}" \
     -H "Content-Type: application/json" \
-    --data '{"type":"A","name":"'"${DNSName}"'","content":"'"${Ipv4_IP}"'","ttl":1,"proxied":false}'
+    --data '{"type":"A","name":"'"${DNSName}"'","content":"'"${IPV4_IP}"'","ttl":1,"proxied":false}'
 
 # Install Depend
 
@@ -124,9 +134,26 @@ ufw allow 33333/tcp
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/1' /etc/ssh/sshd_config
 systemctl restart sshd
 
+# Install BBR
+
+curl -fsSL git.io/deploy-google-bbr.sh | bash
+
 # Install HetrixTools Agent
 
 wget https://raw.github.com/hetrixtools/agent/master/hetrixtools_install.sh && bash hetrixtools_install.sh $HT_AgentID 0 0 0 0 0 0
+
+# Temporary install key using script
+
+echo "$SSH_KEY" > /root/.ssh/authorized_keys
+
+# Send Finish Webhook
+
+curl -i \
+  -H "Accept: application/json" \
+  -H "Content-Type:application/json" \
+  -X POST --data \
+  "$Discord_Content" \
+  "$Discord_Webhook" > /dev/null
 
 # Reboot Server to Upgrade
 
