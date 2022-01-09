@@ -74,10 +74,10 @@ docker run --rm -it \
   -e CF_Token="$CFToken" \
   -e CF_Account_ID="$CFAccountID" \
   -e CF_Zone_ID="$CFZoneID" \
+  neilpang/acme.sh \
   --issue --server letsencrypt --dns dns_cf -d "$DNSName" \
   --key-file /acme.sh/privkey.pem \
   --fullchain-file /acme.sh/fullchain.pem \
-  neilpang/acme.sh
 
 ## Move cert
 mkdir /etc/letsencrypt
@@ -134,9 +134,9 @@ ufw allow 33333/tcp
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/1' /etc/ssh/sshd_config
 systemctl restart sshd
 
-# Install BBR
+# Install BBR (Do not install BBR next time)
 
-curl -fsSL git.io/deploy-google-bbr.sh | bash
+# curl -fsSL git.io/deploy-google-bbr.sh | bash
 
 # Install HetrixTools Agent
 
