@@ -10,7 +10,7 @@
 #      -H "X-Auth-Key: $CFToken" \
 #      -H "Content-Type: application/json"
 
-# Setup env file
+# Setup env var
 
 Email_Name=
 
@@ -26,12 +26,19 @@ CFZoneID=
 CFAccountID=
 DNSName=
 
+## Random SRV
+
+RANDOM_SRVID=
+RANDOM_SRVName=$(echo $RANDOM | md5sum | head -c 6).
+SRVPort=
+
 ## HetrixTools Agent ID
 
 HT_AgentID=
 
 ## Discord Webhook
 
+SubDNS=
 CurrentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 Discord_Webhook=""
 Discord_Content=""
@@ -45,12 +52,17 @@ SSH_KEY=""
 apt-get update
 apt-get upgrade -y
 
-# Update DNS
+# Update DNS & SRV
 
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/${CFZoneID}/dns_records/${DNSRecordID}" \
     -H "Authorization: Bearer ${CFToken}" \
     -H "Content-Type: application/json" \
     --data '{"type":"A","name":"'"${DNSName}"'","content":"'"${IPV4_IP}"'","ttl":1,"proxied":false}'
+
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/${CFZoneID}/dns_records/${RANDOM_SRVID}" \
+    -H "Authorization: Bearer ${CFToken}" \
+    -H "Content-Type: application/json" \
+    --data '{"type": "SRV", "data": {"service": "_minecraft", "proto": "_tcp", "name": "'"$RANDOM_SRVName"'", "priority": 0, "weight": 0, "port": '$SRVPort', "target": "'"$DNSName"'"}}'
 
 # Install Depend
 
@@ -80,9 +92,7 @@ docker run --rm -it \
   --fullchain-file /acme.sh/fullchain.pem \
 
 ## Move cert
-mkdir /etc/letsencrypt
-mkdir /etc/letsencrypt/live
-mkdir /etc/letsencrypt/live/$DNSName
+mkdir -p /etc/letsencrypt/live/$DNSName
 mv /root/out/privkey.pem /etc/letsencrypt/live/$DNSName
 mv /root/out/fullchain.pem /etc/letsencrypt/live/$DNSName
 
