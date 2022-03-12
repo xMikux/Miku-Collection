@@ -77,7 +77,7 @@ jobs:
 
       - name: Setup Environment
         env:
-          DEFAULT_NADEKO_VERSIONS: "v3"
+          DEFAULT_NADEKO_VERSIONS: "v4"
           DEFAULT_IMAGE_VERSIONS: "latest"
         run: |
           echo "NADEKO_VERSIONS=${{ github.event.inputs.versions || env.DEFAULT_NADEKO_VERSIONS }}" >> $GITHUB_ENV
