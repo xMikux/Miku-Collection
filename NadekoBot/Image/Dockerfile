@@ -1,4 +1,4 @@
-FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/sdk:6.0-buster-slim AS build
 WORKDIR /source
 
 COPY src/NadekoBot/*.csproj src/NadekoBot/
@@ -20,7 +20,7 @@ RUN set -xe; \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /app/youtube-dl
 
 # final stage/image
-FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/runtime:5.0-buster-slim
+FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/runtime:6.0-buster-slim
 WORKDIR /app
 
 COPY --from=build /app ./

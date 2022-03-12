@@ -5,7 +5,7 @@ on:
       versions:
         description: "Nadeko Versions"
         required: true
-        default: "v3"
+        default: "v4"
       images-versions:
         description: "Docker Image Versions"
         required: true
@@ -30,11 +30,11 @@ jobs:
       - name: Setup Dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Setup Environment
         env:
-          DEFAULT_NADEKO_VERSIONS: "v3"
+          DEFAULT_NADEKO_VERSIONS: "v4"
           DEFAULT_IMAGE_VERSIONS: "latest"
         run: |
           echo "NADEKO_VERSIONS=${{ github.event.inputs.versions || env.DEFAULT_NADEKO_VERSIONS }}" >> $GITHUB_ENV

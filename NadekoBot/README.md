@@ -2,11 +2,11 @@
 
 NadekoBotIamge for amd64/arm64.
 
-Original Dockerfile on NadekoBotV3, for normal x86_64 docker!
+Original Dockerfile on NadekoBotV4, for normal x86_64 docker!
 
-> [NadekoBotV3](https://gitlab.com/Kwoth/nadekobot/-/tree/v3)
+> [NadekoBotV3](https://gitlab.com/Kwoth/nadekobot/-/tree/v4)
 >
-> [NadekoBotDocs](https://nadekobot.readthedocs.io/en/v3/guides/docker-guide/)
+> [NadekoBotDocs](https://nadekobot.readthedocs.io/en/v4/guides/docker-guide/)
 
 ## Some Info
 
@@ -22,3 +22,10 @@ then nadeko can connect to redis correctly.
   * `ghcr.io/xmikux/nadeko:3.0.8`
   * `ghcr.io/xmikux/nadeko:3.0.9`
   * `ghcr.io/xmikux/nadeko:3.0.10`
+  * `ghcr.io/xmikux/nadeko:3.0.11`
+  * `ghcr.io/xmikux/nadeko:3.0.12`
+  * `ghcr.io/xmikux/nadeko:3.0.13`
+  * `ghcr.io/xmikux/nadeko:4.0.0`
+  * `ghcr.io/xmikux/nadeko:4.0.1`
+  * `ghcr.io/xmikux/nadeko:4.0.2`
+  * `ghcr.io/xmikux/nadeko:4.0.3`
