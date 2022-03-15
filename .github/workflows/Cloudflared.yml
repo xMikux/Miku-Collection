@@ -1,0 +1,65 @@
+name: Build Cloudflared
+
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: "Cloudflared Versions"
+        required: true
+        default: "master"
+      images-versions:
+        description: "Docker Image Versions"
+        required: true
+        default: "latest"
+  schedule:
+    - cron: "0 16 * * 1"
+
+jobs:
+  BuildCloudflared:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./DockerImage/cloudflared
+    steps:
+      - name: Checking Repostiory
+        uses: actions/checkout@v2
+
+      - name: Setup multiarch
+        uses: docker/setup-qemu-action@v1
+
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v1.6.0
+        with:
+          install: true
+
+      - name: Login ghcr.io
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: Setup Environment
+        env:
+          DEFAULT_CLOUDFLARED_VERSIONS: "master"
+          DEFAULT_IMAGE_VERSIONS: "latest"
+        run: |
+          echo "CLOUDFLARED_VERSIONS=${{ github.event.inputs.versions || env.DEFAULT_CLOUDFLARED_VERSIONS }}" >> $GITHUB_ENV
+          echo "IMAGE_VERSIONS=${{ github.event.inputs.images-versions || env.DEFAULT_IMAGE_VERSIONS }}" >> $GITHUB_ENV
+
+      - name: Download Cloudflared Source Code
+        run: |
+          echo "Clone Cloudflared repo..."
+          git clone https://github.com/cloudflare/cloudflared.git
+          echo "Change Verison to $CLOUDFLARED_VERSIONS"
+          git checkout $CLOUDFLARED_VERSIONS
+        working-directory: ${{ env.working-directory }}
+
+      - name: Build & Push Cloudflared Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ env.working-directory }}
+          file: ${{ env.working-directory }}/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/xmikux/miku-collection:${{ env.IMAGE_VERSIONS }}
