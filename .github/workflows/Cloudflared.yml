@@ -49,8 +49,9 @@ jobs:
       - name: Download Cloudflared Source Code
         run: |
           echo "Clone Cloudflared repo..."
-          git clone https://github.com/cloudflare/cloudflared.git
-          git fetch
+          git clone https://github.com/cloudflare/cloudflared.git cloudflared
+          cd cloudflared
+          ls -alh
           echo "Change Verison to $CLOUDFLARED_VERSIONS"
           git checkout $CLOUDFLARED_VERSIONS
         working-directory: ${{ env.working-directory }}
