@@ -1,0 +1,66 @@
+name: Build Owncast
+
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: "Owncast Versions"
+        required: true
+        default: "master"
+      images-versions:
+        description: "Docker Image Versions"
+        required: true
+        default: "latest"
+  schedule:
+    - cron: "0 16 * * *"
+
+jobs:
+  BuildOwncast:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./DockerImage/Owncast
+    steps:
+      - name: Checking Repostiory
+        uses: actions/checkout@v2
+
+      - name: Setup multiarch
+        uses: docker/setup-qemu-action@v1
+
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v1.6.0
+        with:
+          install: true
+
+      - name: Login ghcr.io
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: Setup Environment
+        env:
+          DEFAULT_OWNCAST_VERSIONS: "develop"
+          DEFAULT_IMAGE_VERSIONS: "latest"
+        run: |
+          echo "OWNCAST_VERSIONS=${{ github.event.inputs.versions || env.DEFAULT_OWNCAST_VERSIONS }}" >> $GITHUB_ENV
+          echo "IMAGE_VERSIONS=${{ github.event.inputs.images-versions || env.DEFAULT_IMAGE_VERSIONS }}" >> $GITHUB_ENV
+
+      - name: Download Owncast Source Code
+        run: |
+          echo "Clone Owncast repo..."
+          git clone git@github.com:owncast/owncast.git owncast
+          cd owncast
+          echo "Change Verison to $OWNCAST_VERSIONS"
+          git checkout $OWNCAST_VERSIONS
+        working-directory: ${{ env.working-directory }}
+
+      - name: Build & Push Owncast Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ env.working-directory }}/owncast
+          file: ${{ env.working-directory }}/owncast/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/xmikux/owncast:${{ env.IMAGE_VERSIONS }}
