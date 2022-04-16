@@ -1,6 +1,7 @@
 FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /source
 
+COPY src/Nadeko.Medusa/*.csproj src/Nadeko.Medusa/
 COPY src/NadekoBot/*.csproj src/NadekoBot/
 COPY src/NadekoBot.Coordinator/*.csproj src/NadekoBot.Coordinator/
 COPY src/NadekoBot.Generators/*.csproj src/NadekoBot.Generators/
@@ -41,6 +42,6 @@ ENV total_shards=1
 
 LABEL org.opencontainers.image.source https://github.com/xMikux/Miku-Collection
 
-VOLUME [ "app/data" ]
+VOLUME [ "/app/data" ]
 ENTRYPOINT [ "/usr/local/sbin/docker-entrypoint.sh" ]
 CMD dotnet NadekoBot.dll "$shard_id" "$total_shards"
