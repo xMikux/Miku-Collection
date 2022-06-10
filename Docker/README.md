@@ -4,14 +4,18 @@ A simple Image make or remake by Efin
 
 Some of just rebuild with support arm64
 
-## OracleCLI
+## Cloudflared
 
-[Info](./OracleCLI/README.md)
+[Info](./Cloudflared/README.md)
+
+## EggHAProxy
+
+[Info](./EggHAProxy/README.md)
 
 # NadekoBot
 
 [Info](./NadekoBot/README.md)
 
-## Cloudflared
+## OracleCLI
 
-[Info](./Cloudflared/README.md)
+[Info](./OracleCLI/README.md)
