@@ -6,7 +6,7 @@ on:
     - cron: "0 16 * * *"
 
 jobs:
-  BuildCloudflared:
+  BuildEggHAProxy:
     runs-on: ubuntu-latest
     env:
       working-directory: ./Docker/EggHAProxy

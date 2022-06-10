@@ -30,12 +30,14 @@ COPY docker-entrypoint.sh /usr/local/sbin
 RUN set -xe; \
     useradd -m nadeko; \
     apt-get update; \
-    apt-get install -y libopus0 libsodium23 libsqlite3-0 ffmpeg sudo --no-install-recommends; \
+    apt-get install -y --no-install-recommends libopus0 libsodium23 libsqlite3-0 ffmpeg sudo; \
     rm -rf /var/lib/apt/lists/*; \
     echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
     mv /app/youtube-dl /usr/local/bin/youtube-dl; \
     chmod +x /usr/local/bin/youtube-dl; \
-    chmod +x /usr/local/sbin/docker-entrypoint.sh
+    chmod +x /usr/local/sbin/docker-entrypoint.sh; \
+    apt-get autoremove -y; \
+    apt-get autoclean -y
 
 ENV shard_id=0
 ENV total_shards=1
