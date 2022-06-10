@@ -7,12 +7,12 @@ on:
     branches:
       - main
     paths:
-      - DockerImage/oci/*
+      - Docker/OracleCLI/*
 jobs:
   BuildImage:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./DockerImage/oci
+      working-directory: ./Docker/OracleCLI
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v2
