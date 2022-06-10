@@ -12,7 +12,7 @@ Some of just rebuild with support arm64
 
 [Info](./EggHAProxy/README.md)
 
-# NadekoBot
+## NadekoBot
 
 [Info](./NadekoBot/README.md)
 
