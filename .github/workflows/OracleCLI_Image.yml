@@ -7,7 +7,8 @@ on:
     branches:
       - main
     paths:
-      - Docker/OracleCLI/*
+      - Docker/OracleCLI/**
+
 jobs:
   BuildImage:
     runs-on: ubuntu-latest

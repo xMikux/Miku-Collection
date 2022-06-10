@@ -10,13 +10,14 @@ on:
         description: "Docker Image Versions"
         required: true
         default: "latest"
-  schedule:
-    - cron: "0 16 * * 1"
   push:
     branches:
       - main
     paths:
       - ./Docker/NadekoBot/Image/**
+  schedule:
+    - cron: "0 16 * * 1"
+
 jobs:
   ValidatorNadekoBot:
     name: "ValidatorNadekoBot"
