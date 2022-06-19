@@ -26,7 +26,7 @@ jobs:
       working-directory: ./Docker/NadekoBot/Image
     steps:
       - name: Checking Repostiory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Dotnet
         uses: actions/setup-dotnet@v1
@@ -71,7 +71,7 @@ jobs:
       working-directory: ./Docker/NadekoBot/Image
     steps:
       - name: Checking Repostiory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup multiarch
         uses: docker/setup-qemu-action@v1
