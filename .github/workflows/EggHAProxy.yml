@@ -36,7 +36,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Build & Push EggHAProxy Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}/EggHAProxy
           file: ${{ env.working-directory }}/EggHAProxy/Dockerfile

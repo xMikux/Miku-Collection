@@ -121,7 +121,7 @@ jobs:
       #       ${{ runner.os }}-multi-buildx
 
       - name: Build & Push NadekoBot Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}
           file: ${{env.working-directory}}/Dockerfile
