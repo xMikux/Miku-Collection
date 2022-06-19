@@ -56,7 +56,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Build & Push Cloudflared Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}/cloudflared
           file: ${{ env.working-directory }}/cloudflared/Dockerfile
