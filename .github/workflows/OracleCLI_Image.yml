@@ -16,7 +16,7 @@ jobs:
       working-directory: ./Docker/OracleCLI
     steps:
       - name: Checking Repostiory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup multiarch
         uses: docker/setup-qemu-action@v1
       - name: Setup Buildx
