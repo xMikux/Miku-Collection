@@ -18,7 +18,7 @@ jobs:
       - name: Checking Repostiory
         uses: actions/checkout@v3
       - name: Setup multiarch
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v2.0.0
       - name: Login ghcr.io
