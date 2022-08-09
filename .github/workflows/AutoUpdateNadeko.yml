@@ -43,6 +43,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: Build_NadekoBotImage
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
           ref: main
           inputs: '{ "versions":"${{ steps.check_version.outputs.new_version }}", "images-versions":"${{ steps.check_version.outputs.new_version }}" }'
