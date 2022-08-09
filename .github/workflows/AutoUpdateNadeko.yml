@@ -9,13 +9,13 @@ jobs:
   AutoNadekoVersion:
     name: Auto Nadeko Docker Version
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Version Branch
         uses: actions/checkout@v3
         with:
           ref: auto/version
-      
+
       - name: Get Latest Tag Version
         run: |
           cp nadeko/version.txt nadeko/tmp_version.txt
@@ -24,7 +24,7 @@ jobs:
           git clone https://gitlab.com/Kwoth/nadekobot.git .
           git describe --tags --abbrev=0 > ../nadeko/version.txt
 
-      - name: Checking Version Diff
+      - name: Checking Version Diff & Commit
         id: check_version
         run: |
           if [ $(cat nadeko/version.txt) != $(cat nadeko/tmp_version.txt) ]; then
@@ -32,6 +32,9 @@ jobs:
             NEW_VERSION=$(cat nadeko/version.txt)
             echo "::set-output name=status::true"
             echo "::set-output name=new_version::$NEW_VERSION"
+            git add nadeko/version.txt
+            git commit -m "ci(Nadeko): New Version $NEW_VERSION Updated"
+            git push
           else
             echo "!!>> Version isn't change. Pass..."
             echo "::set-output name=status::false"
