@@ -10,7 +10,6 @@ services:
       #NadekoBot_ShardRunCommand: dotnet
       #NadekoBot_ShardRunArguments: /app/NadekoBot.dll {0} {1}
     volumes:
-      - /opt/NadekoBot/Bot1/conf/creds.yml:/app/creds.yml
       - /opt/NadekoBot/Bot1/data:/app/data
 
   redis:

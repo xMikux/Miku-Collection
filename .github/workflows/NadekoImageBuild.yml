@@ -14,7 +14,7 @@ on:
     branches:
       - main
     paths:
-      - ./Docker/NadekoBot/Image/**
+      - Docker/NadekoBot/Image/*
   schedule:
     - cron: "0 16 * * 1"
 

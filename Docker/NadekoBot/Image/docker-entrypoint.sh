@@ -22,7 +22,7 @@ if [ -f /app/creds.yml ]; then
 fi
 
 # ensure nadeko can write on /app/data
-chown -R nadeko:nadeko "/app"
+chown -R nadeko:nadeko "$data"
 
 # drop to regular user and launch command
 exec sudo -u nadeko "$@"
