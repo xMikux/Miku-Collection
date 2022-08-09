@@ -19,8 +19,8 @@ jobs:
       - name: Get Latest Tag Version
         run: |
           cp nadeko/version.txt nadeko/tmp_version.txt
-          mkdir nadeko
-          cd nadeko
+          mkdir nadeko_repo
+          cd nadeko_repo
           git clone https://gitlab.com/Kwoth/nadekobot.git .
           git describe --tags --abbrev=0 > ../nadeko/version.txt
       
