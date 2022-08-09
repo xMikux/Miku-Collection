@@ -23,6 +23,11 @@ jobs:
           cd nadeko_repo
           git clone https://gitlab.com/Kwoth/nadekobot.git .
           git describe --tags --abbrev=0 > ../nadeko/version.txt
+
+      - name: Debug
+        run: |
+          cat nadeko/version.txt
+          cat nadeko/tmp_version.txt
       
       - name: Checking Version Diff
         id: check_version
