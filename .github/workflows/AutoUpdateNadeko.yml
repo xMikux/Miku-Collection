@@ -22,7 +22,7 @@ jobs:
           mkdir nadeko_repo
           cd nadeko_repo
           git clone https://gitlab.com/Kwoth/nadekobot.git .
-          git describe --tags --abbrev=0 > ../nadeko/version.txt
+          git describe --tags $(git rev-list --tags --max-count=1) > ../nadeko/version.txt
 
       - name: Checking Version Diff & Commit
         id: check_version
