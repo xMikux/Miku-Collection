@@ -111,7 +111,7 @@ jobs:
         # Docker Cache Guide
         # https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
