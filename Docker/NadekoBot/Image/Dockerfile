@@ -33,6 +33,7 @@ RUN set -xe; \
     apt-get install -y --no-install-recommends libopus0 libsodium23 libsqlite3-0 ffmpeg sudo; \
     rm -rf /var/lib/apt/lists/*; \
     echo 'Defaults>nadeko env_keep+="ASPNETCORE_* DOTNET_* NadekoBot_* shard_id total_shards TZ"' > /etc/sudoers.d/nadeko; \
+    ls -alh /app; \
     mv /app/youtube-dl /usr/local/bin/youtube-dl; \
     chmod +x /usr/local/bin/youtube-dl; \
     chmod +x /usr/local/sbin/docker-entrypoint.sh; \
