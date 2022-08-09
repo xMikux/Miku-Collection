@@ -24,15 +24,10 @@ jobs:
           git clone https://gitlab.com/Kwoth/nadekobot.git .
           git describe --tags --abbrev=0 > ../nadeko/version.txt
 
-      - name: Debug
-        run: |
-          cat nadeko/version.txt
-          cat nadeko/tmp_version.txt
-      
       - name: Checking Version Diff
         id: check_version
         run: |
-          if [ $(cat nadeko/version.txt) == $(cat nadeko/tmp_version.txt) ]; then
+          if [ $(cat nadeko/version.txt) != $(cat nadeko/tmp_version.txt) ]; then
             echo "!!>> Version Change Detect! Bump Up~"
             NEW_VERSION=$(cat nadeko/version.txt)
             echo "::set-output name=status::true"
