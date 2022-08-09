@@ -41,10 +41,8 @@ jobs:
         if: |
           steps.check_version.outputs.status == 'true'
         uses: benc-uk/workflow-dispatch@v1
-        env:
-          Version: ${{ steps.check_version.outputs.new_version }}
         with:
           workflow: NadekoImageBuild
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
-          inputs: '{ "versions":"$Version", "images-versions":"$Version" }'
+          inputs: '{ "versions":"${{ steps.check_version.outputs.new_version }}", "images-versions":"${{ steps.check_version.outputs.new_version }}" }'
