@@ -1,0 +1,50 @@
+name: Auto Update Nadeko Docker Version
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 16 * * *"
+
+jobs:
+  AutoNadekoVersion:
+    name: Auto Nadeko Docker Version
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Version Branch
+        uses: actions/checkout@v3
+        with:
+          ref: auto/version
+      
+      - name: Get Latest Tag Version
+        run: |
+          cp nadeko/version.txt nadeko/tmp_version.txt
+          mkdir nadeko
+          cd nadeko
+          git clone https://gitlab.com/Kwoth/nadekobot.git .
+          git describe --tags --abbrev=0 > ../nadeko/version.txt
+      
+      - name: Checking Version Diff
+        id: check_version
+        run: |
+          if [ $(cat nadeko/version.txt) == $(cat nadeko/tmp_version.txt) ]; then
+            echo "!!>> Version Change Detect! Bump Up~"
+            NEW_VERSION=$(cat nadeko/version.txt)
+            echo "::set-output name=status::true"
+            echo "::set-output name=new_version::$NEW_VERSION"
+          else
+            echo "!!>> Version isn't change. Pass..."
+            echo "::set-output name=status::false"
+          fi
+
+      - name: Trigger Action to Update
+        if: |
+          steps.check_version.outputs.status == 'true'
+        uses: benc-uk/workflow-dispatch@v1
+        env:
+          Version: ${{ steps.check_version.outputs.new_version }}
+        with:
+          workflow: NadekoImageBuild
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          inputs: '{ "versions":"$Version", "images-versions":"$Version" }'
