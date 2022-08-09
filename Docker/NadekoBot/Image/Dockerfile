@@ -2,10 +2,13 @@ FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/sdk:6.0-bullseye-
 WORKDIR /source
 
 COPY src/Nadeko.Medusa/*.csproj src/Nadeko.Medusa/
+COPY src/Nadeko.Econ/*.csproj src/Nadeko.Econ/
+COPY src/Nadeko.Common/*.csproj src/Nadeko.Common/
 COPY src/NadekoBot/*.csproj src/NadekoBot/
 COPY src/NadekoBot.Coordinator/*.csproj src/NadekoBot.Coordinator/
 COPY src/NadekoBot.Generators/*.csproj src/NadekoBot.Generators/
 COPY src/ayu/Ayu.Discord.Voice/*.csproj src/ayu/Ayu.Discord.Voice/
+COPY NuGet.Config ./
 RUN dotnet restore src/NadekoBot/
 
 COPY . .
@@ -24,9 +27,6 @@ RUN set -xe; \
 FROM --platform=$TARGETOS/$TARGETARCH mcr.microsoft.com/dotnet/runtime:6.0-bullseye-slim
 WORKDIR /app
 
-COPY --from=build /app ./
-COPY docker-entrypoint.sh /usr/local/sbin
-
 RUN set -xe; \
     useradd -m nadeko; \
     apt-get update; \
@@ -39,8 +39,12 @@ RUN set -xe; \
     apt-get autoremove -y; \
     apt-get autoclean -y
 
+COPY --from=build /app ./
+COPY docker-entrypoint.sh /usr/local/sbin
+
 ENV shard_id=0
 ENV total_shards=1
+ENV NadekoBot__creds=/app/data/creds.yml
 
 LABEL org.opencontainers.image.source https://github.com/xMikux/Miku-Collection
 
