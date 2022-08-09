@@ -87,13 +87,11 @@ jobs:
       - name: Download NadekoBot Source Code
         run: |
           mv Dockerfile DockerfileCopy
-          mv docker-entrypoint.sh docker-entrypointCopy.sh
           curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/$NADEKO_VERSIONS/nadekobot-$NADEKO_VERSIONS.tar.bz2
           sha256sum nadekobot.tar.bz2
           tar -jxvf nadekobot.tar.bz2
           mv nadekobot-$NADEKO_VERSIONS/* .
           mv DockerfileCopy Dockerfile
-          mv docker-entrypointCopy.sh docker-entrypoint.sh
           rm nadekobot.tar.bz2
           rm -r nadekobot-$NADEKO_VERSIONS
         working-directory: ${{ env.working-directory }}
