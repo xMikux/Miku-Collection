@@ -16,7 +16,7 @@ on:
     paths:
       - Docker/NadekoBot/Image/*
   schedule:
-    - cron: "0 16 * * 1"
+    - cron: "0 16 * * *"
 
 jobs:
   # ValidatorNadekoBot:
