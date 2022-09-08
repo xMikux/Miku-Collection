@@ -68,7 +68,7 @@ jobs:
     name: "Build Nadekobot Image"
     runs-on: ubuntu-latest
     env:
-      working-directory: ./Docker/NadekoBot/Image
+      working-directory: Docker/NadekoBot/
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
@@ -86,13 +86,17 @@ jobs:
 
       - name: Download NadekoBot Source Code
         run: |
-          mv Dockerfile DockerfileCopy
+          echo "Download NadekoBot Project..."
           curl -Lo nadekobot.tar.bz2 https://gitlab.com/Kwoth/nadekobot/-/archive/$NADEKO_VERSIONS/nadekobot-$NADEKO_VERSIONS.tar.bz2
-          sha256sum nadekobot.tar.bz2
           tar -jxvf nadekobot.tar.bz2
           mv nadekobot-$NADEKO_VERSIONS/* .
-          mv DockerfileCopy Dockerfile
+
+          echo "Patch Dockerfile"
+          patch -p0 < Patch/Dockerfile.patch
+
+          echo "Remove unuse file/folder"
           rm nadekobot.tar.bz2
+          rm -r Patch
           rm -r nadekobot-$NADEKO_VERSIONS
         working-directory: ${{ env.working-directory }}
 
