@@ -1,4 +1,4 @@
-name: Auto Update Nadeko Docker Version
+name: Auto Update Docker Version
 
 on:
   workflow_dispatch: {}
@@ -6,9 +6,21 @@ on:
     - cron: "0 16 * * *"
 
 jobs:
-  AutoNadekoVersion:
+  AutoUpdate:
     name: Auto Nadeko Docker Version
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        name: [ "Nadeko" ]
+        path: [ "nadeko" ]
+        git: [ "https://gitlab.com/Kwoth/nadekobot.git" ]
+        workflow_id: [ "Build_NadekoBotImage" ]
+
+      # matrix:
+      #   name: [ "Nadeko", "OracleCLI"]
+      #   path: [ "nadeko", "oci" ]
+      #   git: [ "https://gitlab.com/Kwoth/nadekobot.git", "https://github.com/oracle/oci-cli.git" ]
+      #   workflow_id: [ "Build_NadekoBotImage", "OracleCLI_Image" ]
 
     steps:
       - name: Checkout Version Branch
@@ -18,24 +30,24 @@ jobs:
 
       - name: Get Latest Tag Version
         run: |
-          cp nadeko/version.txt nadeko/tmp_version.txt
-          mkdir nadeko_repo
-          cd nadeko_repo
-          git clone https://gitlab.com/Kwoth/nadekobot.git .
-          git describe --tags $(git rev-list --tags --max-count=1) > ../nadeko/version.txt
+          cp ${{ matrix.path }}/version.txt ${{ matrix.path }}/tmp_version.txt
+          mkdir ${{ matrix.path }}_repo
+          cd ${{ matrix.path }}_repo
+          git clone ${{ matrix.git }} .
+          git describe --tags $(git rev-list --tags --max-count=1) > ../${{ matrix.path }}/version.txt
 
       - name: Checking Version Diff & Commit
         id: check_version
         run: |
-          if [ $(cat nadeko/version.txt) != $(cat nadeko/tmp_version.txt) ]; then
+          if [ $(cat ${{ matrix.path }}/version.txt) != $(cat ${{ matrix.path }}/tmp_version.txt) ]; then
             echo "!!>> Version Change Detect! Bump Up~"
-            NEW_VERSION=$(cat nadeko/version.txt)
+            NEW_VERSION=$(cat ${{ matrix.path }}/version.txt)
             echo "::set-output name=status::true"
             echo "::set-output name=new_version::$NEW_VERSION"
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --global user.name "github-actions[bot]"
-            git add nadeko/version.txt
-            git commit -m "ci(Nadeko): New Version $NEW_VERSION Updated"
+            git add ${{ matrix.path }}/version.txt
+            git commit -m "ci(${NAME}): New Version $NEW_VERSION Updated"
             git push
           else
             echo "!!>> Version isn't change. Pass..."
@@ -47,7 +59,7 @@ jobs:
           steps.check_version.outputs.status == 'true'
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: Build_NadekoBotImage
+          workflow: ${{ matrix.workflow_id }}
           token: ${{ secrets.PAT }}
           ref: main
           inputs: '{ "versions":"${{ steps.check_version.outputs.new_version }}", "images-versions":"${{ steps.check_version.outputs.new_version }}" }'

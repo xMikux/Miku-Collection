@@ -1,6 +1,15 @@
 name: OracleCLI_Image
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: "OCI Versions"
+        required: true
+        default: "v4"
+      images-versions:
+        description: "Docker Image Versions"
+        required: true
+        default: "latest"
   schedule:
     - cron: "0 16 * * 1"
   push:
@@ -17,16 +26,37 @@ jobs:
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
+
       - name: Setup multiarch
         uses: docker/setup-qemu-action@v2
+
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v2.0.0
+
+      - name: Setup Environment
+        env:
+          DEFAULT_VERSIONS: "null"
+          DEFAULT_IMAGE_VERSIONS: "latest"
+        run: |
+          echo "VERSIONS=${{ github.event.inputs.versions || env.DEFAULT_VERSIONS }}" >> $GITHUB_ENV
+          echo "IMAGE_VERSIONS=${{ github.event.inputs.images-versions || env.DEFAULT_IMAGE_VERSIONS }}" >> $GITHUB_ENV
+      
+      - name: Setup Version
+        run: |
+          if [ "$DEFAULT_VERSIONS" = "null" ]; then
+            echo "Current version: Latest"
+          else
+            echo "Current version: $DEFAULT_VERSIONS"
+            sed -i "s+oci-cli+oci-cli==$DEFAULT_VERSIONS+" Docker/OracleCLI/requirements.txt
+          fi
+
       - name: Login ghcr.io
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
+
       - name: Build & Push OCI-CLI Image
         uses: docker/build-push-action@v3
         with:
@@ -35,4 +65,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/miku-collection:oci-cli
+            ghcr.io/xmikux/oci-cli:${{ env.IMAGE_VERSIONS }}
