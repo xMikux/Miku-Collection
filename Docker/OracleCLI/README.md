@@ -2,15 +2,15 @@
 
 This image will rebuild every week, to make sure it will up-to-date!
 
-### Usage
+## Usage
 
 1. Make the oci config in ~/.oci/config or other location (but you need to change by yourself)
 
 2. Add below line to your .profile:
 
-```bash
-oci() { docker run --rm --mount type=bind,source=$HOME/.oci,target=/root/.oci ghcr.io/xmikux/miku-collection:oci-cli "$@"; }
-```
+   ```bash
+   oci() { docker run --rm --mount type=bind,source=$HOME/.oci,target=/root/.oci ghcr.io/xmikux/miku-collection:oci-cli "$@"; }
+   ```
 
 3. Or you can just manual run by yourself:
 
