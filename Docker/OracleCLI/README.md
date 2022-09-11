@@ -9,7 +9,7 @@ This image will rebuild every week, to make sure it will up-to-date!
 2. Add below line to your .profile:
 
    ```bash
-   oci() { docker run --rm --mount type=bind,source=$HOME/.oci,target=/root/.oci ghcr.io/xmikux/miku-collection:oci-cli "$@"; }
+   oci() { docker run --rm --mount type=bind,source=$HOME/.oci,target=/root/.oci ghcr.io/xmikux/oci-cli:latest "$@"; }
    ```
 
 3. Or you can just manual run by yourself:
@@ -17,13 +17,13 @@ This image will rebuild every week, to make sure it will up-to-date!
 * Normal Run
 
 ```cmd
-docker run --rm -it -v ${HOME}/.oci:/root/.oci ghcr.io/xmikux/miku-collection:oci-cli -h
+docker run --rm -it -v ${HOME}/.oci:/root/.oci ghcr.io/xmikux/oci-cli:latest -h
 ```
 
 * Override entrypoint
 
 ```cmd
-docker run --rm -it -v ${HOME}/.oci:/root/.oci --entrypoint bash ghcr.io/xmikux/miku-collection:oci-cli
+docker run --rm -it -v ${HOME}/.oci:/root/.oci --entrypoint bash ghcr.io/xmikux/oci-cli:latest
 ```
 
 ### Reference source

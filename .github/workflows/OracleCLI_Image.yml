@@ -5,7 +5,7 @@ on:
       versions:
         description: "OCI Versions"
         required: true
-        default: "v4"
+        default: "null"
       images-versions:
         description: "Docker Image Versions"
         required: true
@@ -43,11 +43,14 @@ jobs:
       
       - name: Setup Version
         run: |
-          if [ "$DEFAULT_VERSIONS" = "null" ]; then
+          if [ "$VERSIONS" = "null" ]; then
             echo "Current version: Latest"
+          elif [ "$VERSIONS" != "null" ]; then
+            echo "Current version: $VERSIONS"
+            sed -i "s+oci-cli+oci-cli==$VERSIONS+" Docker/OracleCLI/requirements.txt
           else
-            echo "Current version: $DEFAULT_VERSIONS"
-            sed -i "s+oci-cli+oci-cli==$DEFAULT_VERSIONS+" Docker/OracleCLI/requirements.txt
+            echo "ERROR"
+            exit 1
           fi
 
       - name: Login ghcr.io
