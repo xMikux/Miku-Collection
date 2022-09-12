@@ -35,13 +35,13 @@ jobs:
           cd ${{ matrix.path }}_repo
           git clone ${{ matrix.git }} .
           git describe --tags $(git rev-list --tags --max-count=1) > ../${{ matrix.path }}/version.txt
+          sed -i "s+v++" ../${{ matrix.path }}/version.txt
 
       - name: Checking Version Diff & Commit
         id: check_version
         run: |
           if [ $(cat ${{ matrix.path }}/version.txt) != $(cat ${{ matrix.path }}/tmp_version.txt) ]; then
             echo "!!>> Version Change Detect! Bump Up~"
-            sed -i "s+v++" ${{ matrix.path }}/version.txt
             NEW_VERSION=$(cat ${{ matrix.path }}/version.txt)
             echo "::set-output name=status::true"
             echo "::set-output name=new_version::$NEW_VERSION"
