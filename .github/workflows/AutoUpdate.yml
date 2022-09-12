@@ -10,17 +10,12 @@ jobs:
     name: Auto Nadeko Docker Version
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
-        name: [ "Nadeko" ]
-        path: [ "nadeko" ]
-        git: [ "https://gitlab.com/Kwoth/nadekobot.git" ]
-        workflow_id: [ "Build_NadekoBotImage" ]
-
-      # matrix:
-      #   name: [ "Nadeko", "OracleCLI"]
-      #   path: [ "nadeko", "oci" ]
-      #   git: [ "https://gitlab.com/Kwoth/nadekobot.git", "https://github.com/oracle/oci-cli.git" ]
-      #   workflow_id: [ "Build_NadekoBotImage", "OracleCLI_Image" ]
+        name: [ "Nadeko", "OracleCLI"]
+        path: [ "nadeko", "oci" ]
+        git: [ "https://gitlab.com/Kwoth/nadekobot.git", "https://github.com/oracle/oci-cli.git" ]
+        workflow_id: [ "Build_NadekoBotImage", "OracleCLI_Image" ]
 
     steps:
       - name: Checkout Version Branch
@@ -41,6 +36,7 @@ jobs:
         run: |
           if [ $(cat ${{ matrix.path }}/version.txt) != $(cat ${{ matrix.path }}/tmp_version.txt) ]; then
             echo "!!>> Version Change Detect! Bump Up~"
+            sed -i "s+v++" ${{ matrix.path }}/version.txt
             NEW_VERSION=$(cat ${{ matrix.path }}/version.txt)
             echo "::set-output name=status::true"
             echo "::set-output name=new_version::$NEW_VERSION"
