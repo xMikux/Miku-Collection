@@ -48,7 +48,7 @@ jobs:
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --global user.name "github-actions[bot]"
             git add ${{ matrix.path }}/version.txt
-            git commit -m "ci(${NAME}): New Version $NEW_VERSION Updated"
+            git commit -m "ci(${{ matrix.name }}): New Version $NEW_VERSION Updated"
             git push
           else
             echo "!!>> Version isn't change. Pass..."
