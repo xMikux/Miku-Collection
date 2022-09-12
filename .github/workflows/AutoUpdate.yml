@@ -7,15 +7,20 @@ on:
 
 jobs:
   AutoUpdate:
-    name: Auto Nadeko Docker Version
+    name: Auto ${{ matrix.name }} Docker Version
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
       matrix:
-        name: [ "Nadeko", "OracleCLI"]
-        path: [ "nadeko", "oci" ]
-        git: [ "https://gitlab.com/Kwoth/nadekobot.git", "https://github.com/oracle/oci-cli.git" ]
-        workflow_id: [ "Build_NadekoBotImage", "OracleCLI_Image" ]
+        include:
+          - name: "Nadeko"
+            path: "nadeko"
+            git: "https://gitlab.com/Kwoth/nadekobot.git"
+            workflow_id: "Build_NadekoBotImage"
+          - name: "OracleCLI"
+            path: "oci"
+            git: "https://github.com/oracle/oci-cli.git"
+            workflow_id: "OracleCLI_Image"
 
     steps:
       - name: Checkout Version Branch
