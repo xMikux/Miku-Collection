@@ -1,0 +1,10 @@
+version: "3.1"
+
+services:
+  hetrixtools-agent:
+    image: miku-collection:hetrixtools
+    container_name: hetrixtools-agent
+    environment:
+      - HETRIX_AGENT_PARAMS=ID 0 0 0 0 0
+    network_mode: "host"
+    restart: unless-stopped

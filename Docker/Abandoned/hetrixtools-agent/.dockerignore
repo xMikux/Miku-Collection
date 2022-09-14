@@ -1,7 +1,0 @@
-# Ignore all files
-*
-
-# Not ignore script & License
-
-!start.sh
-!LICENSE
