@@ -17,7 +17,7 @@ RUN apt-get update && \
 
 RUN TELEPORT_VERSION=${version} \
     TEMP_DIR=$(mktemp -d) && cd $TEMP_DIR \
-    && curl -o teleport.tar.gz -fsSL https://get.gravitational.com/teleport-v${TELEPORT_VERSION}-linux-$([[ "$(uname -m)" == "x86_64" ]] && echo "amd64" || echo "arm64")-bin.tar.gz \
+    && curl -o teleport.tar.gz -fsSL https://get.gravitational.com/teleport-v${TELEPORT_VERSION}-linux-$([ "$(uname -m)" = "x86_64" ] && echo "amd64" || echo "arm64")-bin.tar.gz \
     && tar xvf teleport.tar.gz --strip=1 teleport/teleport teleport/tctl teleport/tsh \
     && mv teleport tctl tsh /usr/local/bin \
     && rm -rf $TEMP_DIR

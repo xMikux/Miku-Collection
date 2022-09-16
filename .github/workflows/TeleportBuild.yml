@@ -12,11 +12,11 @@ on:
         default: "latest"
   # schedule:
     # - cron: "0 16 * * 1"
-  push:
-    branches:
-      - main
-    paths:
-      - Docker/Teleport/**
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - Docker/Teleport/**
 
 jobs:
   BuildImage:
