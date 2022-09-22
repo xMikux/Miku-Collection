@@ -1,0 +1,17 @@
+version: '2'
+services:
+  avc:
+    image: ghcr.io/xmikux/miku-collection:AVC
+    container_name: AutoVoiceChannels
+    environment:
+      - ADMIN_ID=<ADMIN ID>
+      - CLIENT_ID=<CLIENT_ID>
+      - TZ=<TIMEZONE>
+      - TOKEN=<TOKEN>
+      - HEARTBEAT_TIMEOUT=60 #Optional
+      - DISABLE_LOOP=false #Optional
+      - RDY_MESSAGE=false #Optional
+      - AWS=false #Optional
+    volumes:
+      - ./AutoVC:/Auto-Voice-Channels/guilds:Z
+    restart: unless-stopped
