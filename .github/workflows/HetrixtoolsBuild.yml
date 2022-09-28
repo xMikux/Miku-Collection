@@ -1,4 +1,5 @@
 name: Hetrixtools_Image
+
 on:
   workflow_dispatch: {}
   schedule:
@@ -7,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - ${{ env.working-directory }}/**
+      - Docker/Hetrixtools-agent/**
 
 env:
   workflow_name: Hetrixtools
