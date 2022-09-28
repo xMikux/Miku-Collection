@@ -1,5 +1,7 @@
 name: Auto-Voice-Channels_Image
+
 on:
+  workflow_dispatch: {}
   schedule:
     - cron: "0 16 * * 1"
   push:
