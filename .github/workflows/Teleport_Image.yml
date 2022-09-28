@@ -11,12 +11,17 @@ on:
         required: true
         default: "latest"
   # schedule:
-    # - cron: "0 16 * * 1"
+  #   - cron: "0 16 * * 1"
   # push:
   #   branches:
   #     - main
   #   paths:
   #     - Docker/Teleport/**
+
+env:
+  workflow_name: Teleport
+  workflow_image: teleport
+  working-directory: Docker/Teleport
 
 jobs:
   BuildImage:
@@ -40,7 +45,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Build & Push Teleport Image
+      - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}
@@ -50,4 +55,4 @@ jobs:
           build-args: |
             version=${{ github.event.inputs.versions }}
           tags: |
-            ghcr.io/xmikux/teleport:${{ github.event.inputs.images-versions }}
+            ghcr.io/xmikux/${{ env.workflow_image }}:${{ github.event.inputs.images-versions }}

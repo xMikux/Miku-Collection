@@ -1,15 +1,18 @@
-name: Build EggHAProxy
+name: EggHAProxy_Image
 
 on:
   workflow_dispatch: {}
   schedule:
     - cron: "0 16 * * *"
 
+env:
+  workflow_name: EggHAProxy
+  workflow_image: miku-collection:EggHAProxy
+  working-directory: Docker/EggHAProxy
+
 jobs:
   BuildEggHAProxy:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./Docker/EggHAProxy
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
@@ -19,8 +22,6 @@ jobs:
 
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v2.0.0
-        with:
-          install: true
 
       - name: Login ghcr.io
         uses: docker/login-action@v2
@@ -35,7 +36,7 @@ jobs:
           git clone https://github.com/Numa-Lab/EggHAProxy EggHAProxy
         working-directory: ${{ env.working-directory }}
 
-      - name: Build & Push EggHAProxy Image
+      - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}/EggHAProxy
@@ -43,4 +44,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/miku-collection:EggHAProxy
+            ghcr.io/xmikux/${{ env.workflow_image }}

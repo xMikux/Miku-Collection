@@ -18,11 +18,14 @@ on:
     paths:
       - Docker/OracleCLI/**
 
+env:
+  workflow_name: Oracle
+  workflow_image: oci-cli
+  working-directory: Docker/OracleCLI
+
 jobs:
   BuildImage:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./Docker/OracleCLI
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
@@ -60,7 +63,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Build & Push OCI-CLI Image
+      - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}
@@ -68,4 +71,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/oci-cli:${{ env.IMAGE_VERSIONS }}
+            ghcr.io/xmikux/${{ env.workflow_image }}:${{ env.IMAGE_VERSIONS }}

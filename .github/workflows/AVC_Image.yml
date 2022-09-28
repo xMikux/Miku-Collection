@@ -1,4 +1,4 @@
-name: Auto-Voice-Channels
+name: Auto-Voice-Channels_Image
 on:
   schedule:
     - cron: "0 16 * * 1"
@@ -8,11 +8,14 @@ on:
     paths:
       - Docker/Auto-Voice-Channels/**
 
+env:
+  workflow_name: Auto Voice Channels
+  workflow_image: miku-collection:AVC
+  working-directory: Docker/Auto-Voice-Channels
+
 jobs:
   BuildImage:
     runs-on: ubuntu-latest
-    env:
-      working-directory: Docker/Auto-Voice-Channels
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
@@ -30,7 +33,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Build & Push AVC Image
+      - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}
@@ -38,4 +41,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/miku-collection:AVC
+            ghcr.io/xmikux/${{ env.workflow_image }}

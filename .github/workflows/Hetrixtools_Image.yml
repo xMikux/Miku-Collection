@@ -18,7 +18,6 @@ env:
 jobs:
   BuildImage:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
@@ -36,7 +35,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Build & Push (${{ env.workflow_name }} Image)
+      - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}
