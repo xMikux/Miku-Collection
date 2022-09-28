@@ -39,12 +39,20 @@ jobs:
         run: |
           echo "Clone Uptime Kuma repo..."
           git clone https://github.com/louislam/uptime-kuma Uptime-Kuma
+        working-directory: ${{ env.working-directory }}
 
-          echo "Patch discord.js"
+      - name: Patch discord.js
+        run: |
           cd Uptime-Kuma/server/notification-providers/
           patch -p0 < ../../../Patch/discordjs.patch
         working-directory: ${{ env.working-directory }}
-      
+
+      - name: Patch dockerfile
+        run: |
+          cd Uptime-Kuma/docker/
+          patch -p0 < ../../Patch/dockerfile.patch
+        working-directory: ${{ env.working-directory }}
+
       - name: Check discord.js
         run: |
           cat Uptime-Kuma/server/notification-providers/discord.js
