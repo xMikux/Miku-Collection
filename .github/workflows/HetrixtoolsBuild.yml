@@ -1,4 +1,4 @@
-name: Hetrixtools Image
+name: Hetrixtools_Image
 on:
   workflow_dispatch: {}
   schedule:
@@ -7,13 +7,17 @@ on:
     branches:
       - main
     paths:
-      - Docker/Hetrixtools-agent/**
+      - ${{ env.working-directory }}/**
+
+env:
+  workflow_name: Hetrixtools
+  workflow_image: miku-collection:hetrixtools
+  working-directory: Docker/Hetrixtools-agent
 
 jobs:
   BuildImage:
     runs-on: ubuntu-latest
-    env:
-      working-directory: Docker/Hetrixtools-agent
+
     steps:
       - name: Checking Repostiory
         uses: actions/checkout@v3
@@ -31,7 +35,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Build & Push Hetrixtools Image
+      - name: Build & Push (${{ env.workflow_name }} Image)
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.working-directory }}
@@ -39,4 +43,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/xmikux/miku-collection:hetrixtools
+            ghcr.io/xmikux/${{ env.workflow_image }}

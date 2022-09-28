@@ -1,4 +1,4 @@
-name: Build_NadekoBotImage
+name: NadekoBot_Image
 on:
   workflow_dispatch:
     inputs:

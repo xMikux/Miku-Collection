@@ -16,7 +16,7 @@ jobs:
           - name: "Nadeko"
             path: "nadeko"
             git: "https://gitlab.com/Kwoth/nadekobot.git"
-            workflow_id: "Build_NadekoBotImage"
+            workflow_id: "NadekoBot_Image"
           - name: "OracleCLI"
             path: "oci"
             git: "https://github.com/oracle/oci-cli.git"
