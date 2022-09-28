@@ -41,11 +41,11 @@ jobs:
           git clone https://github.com/louislam/uptime-kuma Uptime-Kuma
         working-directory: ${{ env.working-directory }}
 
-      - name: Patch discord.js
-        run: |
-          cd Uptime-Kuma/server/notification-providers/
-          patch -p0 < ../../../Patch/discordjs.patch
-        working-directory: ${{ env.working-directory }}
+      # - name: Patch discord.js
+      #   run: |
+      #     cd Uptime-Kuma/server/notification-providers/
+      #     patch -p0 < ../../../Patch/discordjs.patch
+      #   working-directory: ${{ env.working-directory }}
 
       - name: Patch dockerfile
         run: |
