@@ -53,11 +53,6 @@ jobs:
           patch -p0 < ../../Patch/dockerfile.patch
         working-directory: ${{ env.working-directory }}
 
-      - name: Check discord.js
-        run: |
-          cat Uptime-Kuma/server/notification-providers/discord.js
-        working-directory: ${{ env.working-directory }}
-
       - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
