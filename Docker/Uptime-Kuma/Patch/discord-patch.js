@@ -46,24 +46,24 @@ class Discord extends NotificationProvider {
                 let discorddowndata = {
                     username: discordDisplayName,
                     embeds: [{
-                        title: "❌ Your service " + monitorJSON["name"] + " went down. ❌",
+                        title: "❌ " + monitorJSON["name"] + " 服務出現故障 ❌",
                         color: 16711680,
                         timestamp: heartbeatJSON["time"],
                         fields: [
                             {
-                                name: "Service Name",
+                                name: "服務名稱",
                                 value: monitorJSON["name"],
                             },
+                            // {
+                            //     name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
+                            //     value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
+                            // },
                             {
-                                name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
-                                // value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
-                            },
-                            {
-                                name: "Time (UTC)",
+                                name: "時間（UTC）",
                                 value: heartbeatJSON["time"],
                             },
                             {
-                                name: "Error",
+                                name: "錯誤資訊",
                                 value: heartbeatJSON["msg"],
                             },
                         ],
@@ -81,24 +81,24 @@ class Discord extends NotificationProvider {
                 let discordupdata = {
                     username: discordDisplayName,
                     embeds: [{
-                        title: "✅ Your service " + monitorJSON["name"] + " is up! ✅",
+                        title: "✅ " + monitorJSON["name"] + " 服務已恢復 ✅",
                         color: 65280,
                         timestamp: heartbeatJSON["time"],
                         fields: [
                             {
-                                name: "Service Name",
+                                name: "服務名稱",
                                 value: monitorJSON["name"],
                             },
+                            // {
+                            //     name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
+                            //     value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
+                            // },
                             {
-                                name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
-                                // value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
-                            },
-                            {
-                                name: "Time (UTC)",
+                                name: "時間（UTC）",
                                 value: heartbeatJSON["time"],
                             },
                             {
-                                name: "Ping",
+                                name: "延遲",
                                 value: heartbeatJSON["ping"] == null ? "N/A" : heartbeatJSON["ping"] + " ms",
                             },
                         ],

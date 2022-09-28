@@ -1,20 +1,68 @@
---- discord.js	2022-09-28 18:14:28.476784628 +0800
-+++ discord-patch.js	2022-09-28 18:17:27.501574409 +0800
-@@ -56,7 +56,7 @@
-                             },
+--- discord.js	2022-09-28 23:14:08.982306075 +0800
++++ discord-patch.js	2022-09-29 00:13:53.904922681 +0800
+@@ -46,24 +46,24 @@
+                 let discorddowndata = {
+                     username: discordDisplayName,
+                     embeds: [{
+-                        title: "❌ Your service " + monitorJSON["name"] + " went down. ❌",
++                        title: "❌ " + monitorJSON["name"] + " 服務出現故障 ❌",
+                         color: 16711680,
+                         timestamp: heartbeatJSON["time"],
+                         fields: [
                              {
-                                 name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
+-                                name: "Service Name",
++                                name: "服務名稱",
+                                 value: monitorJSON["name"],
+                             },
++                            // {
++                            //     name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
++                            //     value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
++                            // },
+                             {
+-                                name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
 -                                value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
-+                                // value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
+-                            },
+-                            {
+-                                name: "Time (UTC)",
++                                name: "時間（UTC）",
+                                 value: heartbeatJSON["time"],
                              },
                              {
-                                 name: "Time (UTC)",
-@@ -91,7 +91,7 @@
+-                                name: "Error",
++                                name: "錯誤資訊",
+                                 value: heartbeatJSON["msg"],
                              },
+                         ],
+@@ -81,24 +81,24 @@
+                 let discordupdata = {
+                     username: discordDisplayName,
+                     embeds: [{
+-                        title: "✅ Your service " + monitorJSON["name"] + " is up! ✅",
++                        title: "✅ " + monitorJSON["name"] + " 服務已恢復 ✅",
+                         color: 65280,
+                         timestamp: heartbeatJSON["time"],
+                         fields: [
                              {
-                                 name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
+-                                name: "Service Name",
++                                name: "服務名稱",
+                                 value: monitorJSON["name"],
+                             },
++                            // {
++                            //     name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
++                            //     value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
++                            // },
+                             {
+-                                name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
 -                                value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
-+                                // value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
+-                            },
+-                            {
+-                                name: "Time (UTC)",
++                                name: "時間（UTC）",
+                                 value: heartbeatJSON["time"],
                              },
                              {
-                                 name: "Time (UTC)",
+-                                name: "Ping",
++                                name: "延遲",
+                                 value: heartbeatJSON["ping"] == null ? "N/A" : heartbeatJSON["ping"] + " ms",
+                             },
+                         ],

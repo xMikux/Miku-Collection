@@ -35,29 +35,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Download Uptime Kuma Source Code
-        run: |
-          echo "Clone Uptime Kuma repo..."
-          git clone https://github.com/louislam/uptime-kuma Uptime-Kuma
-        working-directory: ${{ env.working-directory }}
-
-      # - name: Patch discord.js
-      #   run: |
-      #     cd Uptime-Kuma/server/notification-providers/
-      #     patch -p0 < ../../../Patch/discordjs.patch
-      #   working-directory: ${{ env.working-directory }}
-
-      - name: Patch dockerfile
-        run: |
-          cd Uptime-Kuma/docker/
-          patch -p0 < ../../Patch/dockerfile.patch
-        working-directory: ${{ env.working-directory }}
-
       - name: Build & Push (${{ env.workflow_name }})
         uses: docker/build-push-action@v3
         with:
-          context: ${{ env.working-directory }}/Uptime-Kuma
-          file: ${{ env.working-directory }}/Uptime-Kuma/docker/dockerfile
+          context: ${{ env.working-directory }}
+          file: ${{ env.working-directory }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
