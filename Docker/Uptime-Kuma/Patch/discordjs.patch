@@ -1,0 +1,20 @@
+--- discord-original.js	2022-09-28 18:14:28.476784628 +0800
++++ discord-patch.js	2022-09-28 18:17:27.501574409 +0800
+@@ -56,7 +56,7 @@
+                             },
+                             {
+                                 name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
+-                                value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
++                                // value: monitorJSON["type"] === "push" ? "Heartbeat" : address,
+                             },
+                             {
+                                 name: "Time (UTC)",
+@@ -91,7 +91,7 @@
+                             },
+                             {
+                                 name: monitorJSON["type"] === "push" ? "Service Type" : "Service URL",
+-                                value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
++                                // value: monitorJSON["type"] === "push" ? "Heartbeat" : address.startsWith("http") ? "[Visit Service](" + address + ")" : address,
+                             },
+                             {
+                                 name: "Time (UTC)",
