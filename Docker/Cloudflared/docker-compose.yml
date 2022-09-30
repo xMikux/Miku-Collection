@@ -2,7 +2,7 @@ version: "3"
 
 services:
   cloudflared:
-    image: miku-collection:cloudflared
+    image: ghcr.io/xmikux/miku-collection:cloudflared
     container_name: cloudflared
     environment:
       - CF_TOKEN="YourToken"
