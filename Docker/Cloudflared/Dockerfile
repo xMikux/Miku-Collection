@@ -1,11 +1,22 @@
-FROM cloudflare/cloudflared:latest as source
+FROM busybox:1.35.0-uclibc as busybox
+FROM cloudflare/cloudflared:latest as cloudflared
 
+# Main Image
 FROM gcr.io/distroless/base-debian11:nonroot
 
-COPY --from=source --chown=nonroot /usr/local/bin/cloudflared /usr/local/bin/cloudflared
+# Copy Cloudflare binary to image
+COPY --from=cloudflared --chown=nonroot /usr/local/bin/cloudflared /usr/local/bin/cloudflared
 
+# Copy shell to image
+COPY --from=busybox /bin/sh /bin/sh
+
+# Copy entrypoint
+COPY --chown=nonroot entrypoint.sh .
+
+# Add nonroot user
 USER nonroot
 
-ENV CF_TOKEN=noToken
+# Tunnel Token env
+ENV TUNNEL_TOKEN=noToken
 
-ENTRYPOINT [ "cloudflared", "tunnel", "--no-autoupdate", "run", "--token", "${CF_TOKEN}" ]
+ENTRYPOINT [ "/bin/sh", "entrypoint.sh" ]

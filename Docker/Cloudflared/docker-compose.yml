@@ -5,5 +5,5 @@ services:
     image: ghcr.io/xmikux/miku-collection:cloudflared
     container_name: cloudflared
     environment:
-      - CF_TOKEN="YourToken"
+      - TUNNEL_TOKEN=YourToken
     restart: unless-stopped
