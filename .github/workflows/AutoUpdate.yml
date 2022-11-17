@@ -58,7 +58,7 @@ jobs:
       - name: Trigger Action to Update
         if: |
           steps.check_version.outputs.status == 'true'
-        uses: benc-uk/workflow-dispatch@v1
+        uses: benc-uk/workflow-dispatch@v121
         with:
           workflow: ${{ matrix.workflow_id }}
           token: ${{ secrets.PAT }}
